@@ -1,3 +1,7 @@
+import React from 'react'
+
+export default React
+
 export interface TextLabelProps {
   BackgroundColor3?: Color3
   BackgroundTransparency?: number
@@ -9,7 +13,7 @@ export interface TextLabelProps {
   TextSize?: number
 }
 
-export const textlabel = (props: TextLabelProps) => {
+export const Textlabel = (props: TextLabelProps) => {
   return <>{props.Text || "Hello world!"}</>
 }
 
@@ -23,5 +27,22 @@ export class Color3 {
 
 export class UDim2 {
   constructor(w: number, h: number, d: number, p: number) {
+  }
+}
+
+declare global {
+  class Color3 {
+    constructor()
+    static fromRGB(r: number, g: number, b: number): Color3
+  }
+
+  class UDim2 {
+    constructor(w: number, h: number, d: number, p: number)
+  }
+
+  namespace JSX {
+    interface IntrinsicElements {
+      Textlabel: React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    }
   }
 }
