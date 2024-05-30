@@ -13,7 +13,7 @@ export interface TextLabelProps {
   TextSize?: number
 }
 
-export const Textlabel = (props: TextLabelProps) => {
+export const TextLabel = (props: TextLabelProps) => {
   return <>{props.Text || "Hello world!"}</>
 }
 
@@ -42,7 +42,7 @@ declare global {
 
   namespace JSX {
     interface IntrinsicElements {
-      Textlabel: React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+      textlabel: TextLabelProps
     }
   }
 }
