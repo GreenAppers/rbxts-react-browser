@@ -3,7 +3,7 @@
 ## Usage
 
 ```JSX
-import { MyComponent } from '@rbxroot/src/StarterPlayer/StarterPlayerScripts/Gui/components/MyComponent'
+import { MyComponent } from 'StarterPlayer/StarterPlayerScripts/Gui/components/MyComponent'
 
 export default function MyWebPage() {
   return (
@@ -41,7 +41,7 @@ yarn create next-app
 
 ### Update MyGame/tsconfig.json
 
-- Add `"exclude": ["webapp"]` to top level
+- Add `"exclude": ["webapp"]` to top level.
 
 ### Create MyGame/src/project.json
 
@@ -60,14 +60,22 @@ yarn create next-app
 ```json
 "@rbxroot/src": "file:../src",
 "@rbxts/react": "git+https://github.com/GreenAppers/rbxts-react-browser.git",
+"@rbxts/pretty-react-hooks": "git+https://github.com/GreenAppers/rbxts-pretty-react-hooks-browser.git",
 ```
 
-### Update MyGame/webapp/tscconfig.json
+### Update MyGame/webapp/tsconfig.json
 
-- Add `"jsxImportSource": "@rbxts/react"` to `compilerOptions`
-- Add `"node_modules/@rbxts/react/dist/index.d.ts"` to `include`
+- Add to `compilerOptions`:
+
+```
+"baseUrl": ".",
+"jsxImportSource": "@rbxts/react",
+```
+
+- Add `"StarterPlayer/*": ["node_modules/@rbxroot/src/StarterPlayer/*"],` to `compilerOptions.paths`.
+- Add `"node_modules/@rbxts/react/dist/index.d.ts"` to `include`.
 
 ### Update MyGame/webapp/next.config.mjs
 
-- Add `transpilePackages: ['@rbxroot/src']` to `nextConfig`
+- Add `transpilePackages: ['@rbxroot/src']` to `nextConfig`.
 - Done!
