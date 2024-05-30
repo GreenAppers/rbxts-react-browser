@@ -17,6 +17,12 @@ import { MyComponent } from '@rbxroot/src/StarterPlayer/StarterPlayerScripts/Gui
 />
 ```
 
+### Update imported source
+
+```
+yarn upgrade @rbxroot/src
+```
+
 ## Setup
 
 ### Create `webapp` in subdirectory of Rojo root
