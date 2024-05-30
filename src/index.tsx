@@ -1,7 +1,25 @@
-import React, { createContext, useEffect } from "react";
+import React, { createContext, useCallback, useEffect, useMemo, useState } from "react";
 
 export default React;
-export { createContext, useEffect };
+export { createContext, useCallback, useEffect, useMemo, useState };
+
+export interface Binding<T> {
+  getValue(): T;
+  map<U>(predicate: (value: T) => U): Binding<U>;
+}
+
+export function useBinding<T>(
+  initialValue: T
+): [Binding<T>, (newValue: T) => void] {
+  const [value, setValue] = useState(initialValue);
+  const binding: Binding<T> = useMemo(() => {
+    return {
+      getValue: () => value,
+      map: (predicate) => useBinding(predicate(value))[0],
+    };
+  }, [value]);
+  return [binding, setValue];
+}
 
 export interface TextLabelProps {
   BackgroundColor3?: Color3;

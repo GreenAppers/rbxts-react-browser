@@ -27,7 +27,7 @@ export default function MyWebPage() {
 ### Update imported source
 
 ```console
-yarn upgrade @rbxroot/src
+yarn upgrade ReplicatedStorage StarterPlayer
 ```
 
 ## Setup
@@ -43,13 +43,23 @@ yarn create next-app
 
 - Add `"exclude": ["webapp"]` to top level.
 
-### Create MyGame/src/project.json
+### Create MyGame/ReplicatedStorage/project.json
 
 ```json
 {
-  "name": "@rbxroot/src",
+  "name": "ReplicatedStorage",
   "version": "1.0.0",
-  "description": "Dummy package to allow file:../src dependency in ./webapp"
+  "description": "Dummy package to allow file:../src/ReplicatedStorage dependency in ./webapp"
+}
+```
+
+### Create MyGame/StarterPlayer/project.json
+
+```json
+{
+  "name": "StarterPlayer",
+  "version": "1.0.0",
+  "description": "Dummy package to allow file:../src/StarterPlayer dependency in ./webapp"
 }
 ```
 
@@ -58,24 +68,22 @@ yarn create next-app
 - Add dependencies:
 
 ```json
-"@rbxroot/src": "file:../src",
-"@rbxts/react": "git+https://github.com/GreenAppers/rbxts-react-browser.git",
+"ReplicatedStorage": "file:../src/ReplicatedStorage",
+"StarterPlayer": "file:../src/StarterPlayer",
+"@rbxts/device": "git+https://github.com/GreenAppers/rbxts-device-browser.git",
 "@rbxts/pretty-react-hooks": "git+https://github.com/GreenAppers/rbxts-pretty-react-hooks-browser.git",
+"@rbxts/react": "git+https://github.com/GreenAppers/rbxts-react-browser.git",
+"@rbxts/ripple": "git+https://github.com/GreenAppers/rbxts-ripple-browser.git",
+"@rbxts/services": "git+https://github.com/GreenAppers/rbxts-services-browser.git",
+"@rbxts/set-timeout": "git+https://github.com/GreenAppers/rbxts-set-timeout-browser.git",
 ```
 
 ### Update MyGame/webapp/tsconfig.json
 
-- Add to `compilerOptions`:
-
-```
-"baseUrl": ".",
-"jsxImportSource": "@rbxts/react",
-```
-
-- Add `"StarterPlayer/*": ["node_modules/@rbxroot/src/StarterPlayer/*"],` to `compilerOptions.paths`.
+- Add `"jsxImportSource": "@rbxts/react",` to `compilerOptions`.
 - Add `"node_modules/@rbxts/react/dist/index.d.ts"` to `include`.
 
 ### Update MyGame/webapp/next.config.mjs
 
-- Add `transpilePackages: ['@rbxroot/src']` to `nextConfig`.
+- Add `transpilePackages: ['ReplicatedStorage', 'StarterPlayer']` to `nextConfig`.
 - Done!
