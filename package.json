@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "@rbxts/react clone for the browser",
   "author": "GreenAppers",
-  "license": "BSD",
+  "license": "BSD-3-Clause",
   "main": "dist/index.js",
   "files": [
     "dist"

@@ -1,7 +1,8 @@
+import { Binding } from "./binding";
 import { RobloxInstance } from "./instance";
 
 export interface UICornerProps {
-  CornerRadius?: number;
+  CornerRadius?: UDim | Binding<UDim>;
 }
 
 export class UICorner extends RobloxInstance<UICornerProps> {

@@ -1,8 +1,8 @@
 import { useMemo, useState } from "react";
 
 export interface Binding<T> {
-  getValue(): T;
-  map<U>(predicate: (value: T) => U): Binding<U>;
+  toString(): string;
+  valueOf(): T;
 }
 
 export function useBinding<T>(
@@ -11,8 +11,8 @@ export function useBinding<T>(
   const [value, setValue] = useState(initialValue);
   const binding: Binding<T> = useMemo(() => {
     return {
-      getValue: () => value,
-      map: (predicate) => useBinding(predicate(value))[0],
+      valueOf: () => value,
+      toString: () => value?.toString() ?? '',
     };
   }, [value]);
   return [binding, setValue];
