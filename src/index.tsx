@@ -47,6 +47,8 @@ export {
   useState,
 };
 
+export type InferEnumNames<T> = T;
+
 export class game {
   static PlaceId: number = 0;
 }
@@ -110,14 +112,40 @@ declare global {
     R: number;
     G: number;
     B: number;
-    constructor(r: number, g: number, b: number);
+    constructor(r?: number, g?: number, b?: number);
     toString(): string;
+    Lerp(goal: Color3, alpha: number): Color3;
     static fromRGB(r: number, g: number, b: number): Color3;
   }
 
   namespace Enum {
+    enum AutomaticSize {
+      None = "None",
+      X = "X",
+      Y = "Y",
+      XY = "XY",
+    }
+    enum EasingDirection {
+      In = "In",
+      Out = "Out",
+      InOut = "InOut",
+    }
+    enum EasingStyle {
+      Linear = "Linear",
+      Sine = "Sine",
+      Back = "Back",
+      Quad = "Quad",
+      Quart = "Quart",
+      Quint = "Quint",
+      Bounce = "Bounce",
+      Elastic = "Elastic",
+      Exponential = "Exponential",
+      Circular = "Circular",
+      Cubic = "Cubic",
+    }
     enum Font {
       RobotoMono = "RobotoMono",
+      Unknown = "Unknown",
     }
     enum FontWeight {
       Thin = 100,
@@ -130,6 +158,21 @@ declare global {
       ExtraBold = 800,
       Heavy = 900,
     }
+    enum TextXAlignment {
+      Center = "Center",
+      Left = "Left",
+      Right = "Right",
+    }
+    enum TextYAlignment {
+      Center = "Center",
+      Bottom = "Bottom",
+      Top = "Top",
+    }
+    enum TextTruncate {
+      AtEnd = "AtEnd",
+      None = "None",
+      SplitWord = "SplitWord",
+    }
   }
 
   class Font {
@@ -140,16 +183,24 @@ declare global {
   class Frame extends RobloxInstance<FrameProps> {}
 
   class UDim {
-    constructor(x: number, o: number);
+    Scale: number;
+    Offset: number;
+    constructor(s: number, o: number);
+    Lerp(goal: UDim, alpha: number): UDim;
   }
 
   class UDim2 {
+    X: UDim;
+    Y: UDim;
     constructor(xs: number, xo: number, ys: number, yo: number);
+    Lerp(goal: UDim2, alpha: number): UDim2;
   }
 
   class UICorner extends RobloxInstance<UICornerProps> {}
 
   class TextButton extends RobloxInstance<TextButtonProps> {}
+
+  class TextLabel extends RobloxInstance<TextLabelProps> {}
 
   class Vector2 {
     X: number;
