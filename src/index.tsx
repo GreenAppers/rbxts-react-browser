@@ -1,7 +1,9 @@
 import React, {
   createContext,
+  Dispatch,
   forwardRef,
   Ref,
+  SetStateAction,
   useCallback,
   useEffect,
   useMemo,
@@ -25,7 +27,14 @@ import { UDim, UDim2 } from "./udim";
 import { Vector2 } from "./vector";
 
 export default React;
-export type { Binding, InstanceEvent, InstanceChangeEvent, Ref };
+export type {
+  Binding,
+  Dispatch,
+  InstanceEvent,
+  InstanceChangeEvent,
+  Ref,
+  SetStateAction,
+};
 export {
   createBinding,
   createContext,
