@@ -91,7 +91,7 @@ yarn create next-app
 ### Update MyGame/webapp/tsconfig.json
 
 - Add `"jsxImportSource": "@rbxts/react",` to `compilerOptions`.
-- Add `"node_modules/@rbxts/react/dist/index.d.ts"` to `include`.
+- Add `"node_modules/@rbxts/react/dist/index.d.ts", "../src/types.d.ts"` to `include`.
 
 ### Update MyGame/webapp/next.config.mjs
 

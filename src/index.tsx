@@ -5,6 +5,10 @@ import React, {
   useMemo,
   useState,
 } from "react";
+import { Color3 } from "./color3";
+import { math } from './math'
+import { TextLabelProps } from "./textlabel";
+import { UDim2 } from "./udim2";
 
 export default React;
 export { createContext, useCallback, useEffect, useMemo, useState };
@@ -27,48 +31,9 @@ export function useBinding<T>(
   return [binding, setValue];
 }
 
-export interface TextLabelProps {
-  BackgroundColor3?: Color3;
-  BackgroundTransparency?: number;
-  Position?: UDim2;
-  Size?: UDim2;
-  Text?: String;
-  TextColor3?: Color3;
-  TextScaled?: boolean;
-  TextSize?: number;
-}
 
-export const TextLabel = (props: TextLabelProps) => {
-  return (
-    <span
-      style={{
-        backgroundColor: props.BackgroundColor3?.toString(),
-        color: props.TextColor3?.toString(),
-      }}
-    >
-      {props.Text || ""}
-    </span>
-  );
-};
-
-export class Color3 {
-  R: number;
-  G: number;
-  B: number;
-
-  constructor(r: number, g: number, b: number) {
-    this.R = r;
-    this.G = g;
-    this.B = b;
-  }
-
-  toString(): string {
-    return `rgb(${this.R}, ${this.G}, ${this.B})`;
-  }
-
-  static fromRGB(r: number, g: number, b: number): Color3 {
-    return new Color3(r, g, b);
-  }
+export class game {
+  static PlaceId: number = 0;
 }
 
 export class os {
@@ -81,46 +46,31 @@ export class task {
   static wait(seconds: number): void {}
 }
 
-
-export class UDim2 {
-  constructor(xs: number, xo: number, ys: number, yo: number) {}
-}
-
 declare global {
-  class Color3 {
-    R: number;
-    G: number;
-    B: number;
-    constructor(r: number, g: number, b: number);
-    toString(): string;
-    static fromRGB(r: number, g: number, b: number): Color3;
-  }
-
   interface Instance {
-    FindFirstChild<X>(name: string): X | undefined;
     Name: String;
     Parent?: Instance;
     Destroy: () => void;
+    FindFirstChild: <X = Instance>(name: string) => X | undefined;
+    GetChildren: <X = Instance>(this: Instance) => Array<X>;
+    WaitForChild: <X = Instance>(
+      this: Instance,
+      childName: string | number
+    ) => X;
   }
 
   interface CreatableInstances {
-    Sound: Sound
+    Sound: Sound;
   }
-  
+
   interface InstanceConstructor {
-    new <T extends keyof CreatableInstances>(className: T, parent?: Instance): CreatableInstances[T];
+    new <T extends keyof CreatableInstances>(
+      className: T,
+      parent?: Instance
+    ): CreatableInstances[T];
   }
-  
+
   const Instance: InstanceConstructor;
-
-  class os {
-    static clock(): number;
-  }
-
-  interface RBXScriptSignal {
-    Connect(callback: () => void): void;
-    Disconnect(): void;
-  }
 
   interface Sound extends Instance {
     Ended: RBXScriptSignal;
@@ -131,12 +81,58 @@ declare global {
     Volume: number;
   }
 
-  class task {
-    static wait(seconds: number): void;
+  interface RBXScriptSignal {
+    Connect(callback: () => void): void;
+    Disconnect(): void;
+  }
+
+  class Color3 {
+    R: number;
+    G: number;
+    B: number;
+    constructor(r: number, g: number, b: number);
+    toString(): string;
+    static fromRGB(r: number, g: number, b: number): Color3;
   }
 
   class UDim2 {
     constructor(xs: number, xo: number, ys: number, yo: number);
+  }
+
+  class Vector2 {
+    X: number;
+    Y: number;
+    constructor(x: number, y: number);
+  }
+
+  class math {
+    static clamp(value: number, min: number, max: number): number;
+    static max(x: number, y: number): number;
+    static min(x: number, y: number): number;
+    static sin(x: number): number;
+    static cos(x: number): number;
+    static tan(x: number): number;
+    static asin(x: number): number;
+    static acos(x: number): number;
+    static atan(x: number): number;
+    static atan2(y: number, x: number): number;
+    static sqrt(x: number): number;
+    static exp(x: number): number;
+    static log(x: number): number;
+    static abs(x: number): number;
+    static sign(x: number): -1 | 0 | 1;
+  }
+
+  class game {
+    static PlaceId: number;
+  }
+
+  class os {
+    static clock(): number;
+  }
+
+  class task {
+    static wait(seconds: number): void;
   }
 
   namespace JSX {
@@ -146,8 +142,9 @@ declare global {
   }
 }
 
+(globalThis as any).Instance = Instance;
 (globalThis as any).Color3 = Color3;
 (globalThis as any).UDim2 = UDim2;
-(globalThis as any).Instance = Instance;
+(globalThis as any).math = math;
 (globalThis as any).os = os;
 (globalThis as any).task = task;

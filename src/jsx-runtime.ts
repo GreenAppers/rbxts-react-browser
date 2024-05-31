@@ -1,5 +1,5 @@
 import { createElement, Fragment } from "react";
-import { TextLabel } from "./index";
+import { TextLabel } from "./textlabel";
 
 type Source = {
   fileName: string;
@@ -12,11 +12,15 @@ function jsx(
   props: Record<string, any>,
   key: string | number | undefined
 ) {
-  if (type === 'textlabel') type = TextLabel
-  if(key !== undefined) {
+  switch (type) {
+    case "textlabel":
+      type = TextLabel;
+      break;
+  }
+  if (key !== undefined) {
     return createElement(type, {
       ...props,
-      key
+      key,
     });
   } else {
     return createElement(type, props);
@@ -35,9 +39,4 @@ function jsxDEV(
   return jsx(type, props, key);
 }
 
-export {
-  jsx,
-  jsx as jsxs,
-  jsxDEV,
-  Fragment
-};
+export { jsx, jsx as jsxs, jsxDEV, Fragment };
