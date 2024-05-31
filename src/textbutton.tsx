@@ -32,7 +32,7 @@ export class TextButton extends RobloxInstance<TextButtonProps> {
           color: this.props.TextColor3?.toString(),
         }}
       >
-        {this.props.Text?.valueOf() || ""}
+        {this.props.Text?.toString() || ""}
       </span>
     );
   }

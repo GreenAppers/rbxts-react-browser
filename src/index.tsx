@@ -7,7 +7,7 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import { Binding, useBinding } from "./binding";
+import { Binding, createBinding, useBinding, joinBindings } from "./binding";
 import { Color3 } from "./color";
 import {
   Callback,
@@ -27,8 +27,10 @@ import { Vector2 } from "./vector";
 export default React;
 export type { Binding, InstanceEvent, InstanceChangeEvent, Ref };
 export {
+  createBinding,
   createContext,
   forwardRef,
+  joinBindings,
   useBinding,
   useCallback,
   useEffect,
