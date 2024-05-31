@@ -1,4 +1,5 @@
 import { createElement, Fragment } from "react";
+import { TextButton } from "./textbutton";
 import { TextLabel } from "./textlabel";
 
 type Source = {
@@ -12,7 +13,10 @@ function jsx(
   props: Record<string, any>,
   key: string | number | undefined
 ) {
-  switch (type) {
+  switch (type.toString().toLocaleLowerCase()) {
+    case "textbutton":
+      type = TextButton;
+      break;
     case "textlabel":
       type = TextLabel;
       break;

@@ -6,7 +6,9 @@ import React, {
   useState,
 } from "react";
 import { Color3 } from "./color3";
-import { math } from './math'
+import { Font } from "./font";
+import { math } from "./math";
+import { TextButtonProps } from "./textbutton";
 import { TextLabelProps } from "./textlabel";
 import { UDim2 } from "./udim2";
 
@@ -30,7 +32,6 @@ export function useBinding<T>(
   }, [value]);
   return [binding, setValue];
 }
-
 
 export class game {
   static PlaceId: number = 0;
@@ -95,17 +96,56 @@ declare global {
     static fromRGB(r: number, g: number, b: number): Color3;
   }
 
+  namespace Enum {
+    enum Font {
+      RobotoMono = "RobotoMono",
+    }
+    enum FontWeight {
+      Thin = 100,
+      ExtraLight = 200,
+      Light = 300,
+      Regular = 400,
+      Medium = 500,
+      SemiBold = 600,
+      Bold = 700,
+      ExtraBold = 800,
+      Heavy = 900,
+    }
+  }
+
+  class Font {
+    constructor(name?: string, weight?: Enum.FontWeight);
+    static fromEnum(font: Enum.Font): Font;
+  }
+
   class UDim2 {
     constructor(xs: number, xo: number, ys: number, yo: number);
+  }
+
+  class TextButton
+    extends React.Component<TextButtonProps>
+    implements Instance
+  {
+    Name: String;
+    Parent?: Instance;
+    Destroy: () => void;
+    FindFirstChild: <X = Instance>(name: string) => X | undefined;
+    GetChildren: <X = Instance>(this: Instance) => Array<X>;
+    WaitForChild: <X = Instance>(
+      this: Instance,
+      childName: string | number
+    ) => X;
   }
 
   class Vector2 {
     X: number;
     Y: number;
     constructor(x: number, y: number);
+    get Magnitude(): number;
   }
 
   class math {
+    static huge: number;
     static clamp(value: number, min: number, max: number): number;
     static max(x: number, y: number): number;
     static min(x: number, y: number): number;
@@ -120,6 +160,7 @@ declare global {
     static exp(x: number): number;
     static log(x: number): number;
     static abs(x: number): number;
+    static round(x: number): number;
     static sign(x: number): -1 | 0 | 1;
   }
 
@@ -137,6 +178,7 @@ declare global {
 
   namespace JSX {
     interface IntrinsicElements {
+      textbutton: TextButtonProps;
       textlabel: TextLabelProps;
     }
   }
@@ -144,6 +186,7 @@ declare global {
 
 (globalThis as any).Instance = Instance;
 (globalThis as any).Color3 = Color3;
+(globalThis as any).Font = Font;
 (globalThis as any).UDim2 = UDim2;
 (globalThis as any).math = math;
 (globalThis as any).os = os;

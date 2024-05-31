@@ -1,5 +1,6 @@
 
 export class math {
+  static huge = Number.MAX_VALUE;
   static clamp(value: number, min: number, max: number): number {
     return Math.min(Math.max(value, min), max);
   }
@@ -41,6 +42,9 @@ export class math {
   }
   static abs(x: number): number {
     return Math.abs(x);
+  }
+  static round(x: number): number {
+    return Math.round(x);
   }
   static sign(x: number): -1 | 0 | 1 {
     return x < 0 ? -1 : x > 0 ? 1 : 0;
