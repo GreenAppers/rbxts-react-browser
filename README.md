@@ -1,4 +1,4 @@
-# rbxts-react-browser
+# rbxts-react-browser [![test](https://github.com/GreenAppers/rbxts-react-browser/actions/workflows/test.yaml/badge.svg)](https://github.com/GreenAppers/rbxts-react-browser/actions/workflows/test.yaml)
 
 PoC for running `@rbxts/react` UIs in a web browser. TLDR:
 
