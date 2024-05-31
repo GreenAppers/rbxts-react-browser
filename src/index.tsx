@@ -1,4 +1,10 @@
-import React, { createContext, useCallback, useEffect, useMemo, useState } from "react";
+import React, {
+  createContext,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
 export default React;
 export { createContext, useCallback, useEffect, useMemo, useState };
@@ -65,6 +71,17 @@ export class Color3 {
   }
 }
 
+export class os {
+  static clock(): number {
+    return new Date().getTime() / 1000.0;
+  }
+}
+
+export class task {
+  static wait(seconds: number): void {}
+}
+
+
 export class UDim2 {
   constructor(xs: number, xo: number, ys: number, yo: number) {}
 }
@@ -77,6 +94,45 @@ declare global {
     constructor(r: number, g: number, b: number);
     toString(): string;
     static fromRGB(r: number, g: number, b: number): Color3;
+  }
+
+  interface Instance {
+    FindFirstChild<X>(name: string): X | undefined;
+    Name: String;
+    Parent?: Instance;
+    Destroy: () => void;
+  }
+
+  interface CreatableInstances {
+    Sound: Sound
+  }
+  
+  interface InstanceConstructor {
+    new <T extends keyof CreatableInstances>(className: T, parent?: Instance): CreatableInstances[T];
+  }
+  
+  const Instance: InstanceConstructor;
+
+  class os {
+    static clock(): number;
+  }
+
+  interface RBXScriptSignal {
+    Connect(callback: () => void): void;
+    Disconnect(): void;
+  }
+
+  interface Sound extends Instance {
+    Ended: RBXScriptSignal;
+    Looped: boolean;
+    Play: () => void;
+    PlaybackSpeed: number;
+    SoundId: string;
+    Volume: number;
+  }
+
+  class task {
+    static wait(seconds: number): void;
   }
 
   class UDim2 {
@@ -92,3 +148,6 @@ declare global {
 
 (globalThis as any).Color3 = Color3;
 (globalThis as any).UDim2 = UDim2;
+(globalThis as any).Instance = Instance;
+(globalThis as any).os = os;
+(globalThis as any).task = task;

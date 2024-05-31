@@ -85,6 +85,7 @@ yarn create next-app
 "@rbxts/ripple": "git+https://github.com/GreenAppers/rbxts-ripple-browser.git",
 "@rbxts/services": "git+https://github.com/GreenAppers/rbxts-services-browser.git",
 "@rbxts/set-timeout": "git+https://github.com/GreenAppers/rbxts-set-timeout-browser.git",
+"rbxts-transform-env": "git+https://github.com/GreenAppers/rbxts-transform-env-browser.git",
 ```
 
 ### Update MyGame/webapp/tsconfig.json
