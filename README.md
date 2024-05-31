@@ -1,5 +1,14 @@
 # rbxts-react-browser
 
+PoC for running `@rbxts/react` UIs in a web browser. TLDR:
+
+- [Import rewiring](#Setup) to build UI from a [Rojo](https://rojo.space/) project with [@rbxts/react](https://github.com/littensy/rbxts-react) rewired to [React (browser) implementation](src/index.tsx).
+- Custom [JSX Runtime](src/jsx-runtime.ts) bindings for JSX `IntrinsicElement`.
+- Port [associated packages](https://github.com/search?q=owner%3AGreenAppers+rbxts&type=repositories)
+
+This example uses the Rojo project structure from [SurviveArcade](https://github.com/GreenAppers/SurviveArcade) with
+`src/ReplicatedStorage`, `src/ServerScriptService`, and `src/StarterPlayer`. These can be replaced, e.g with `src/shared`, `src/server`, and `src/client`.
+
 ## Usage
 
 ```JSX
@@ -65,7 +74,7 @@ yarn create next-app
 
 ### Update MyGame/webapp/package.json
 
-- Add dependencies:
+- Add `dependencies`:
 
 ```json
 "ReplicatedStorage": "file:../src/ReplicatedStorage",
@@ -87,3 +96,7 @@ yarn create next-app
 
 - Add `transpilePackages: ['ReplicatedStorage', 'StarterPlayer']` to `nextConfig`.
 - Done!
+
+## Contributions
+
+PRs appreciated!
