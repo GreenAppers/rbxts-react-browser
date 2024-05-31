@@ -1,37 +1,40 @@
 import React, {
   createContext,
+  forwardRef,
+  Ref,
   useCallback,
   useEffect,
   useMemo,
   useState,
 } from "react";
-import { Color3 } from "./color3";
+import { Binding, useBinding } from "./binding";
+import { Color3 } from "./color";
+import {
+  Callback,
+  InstanceEvent,
+  InstanceChangeEvent,
+  RobloxInstance,
+} from "./instance";
 import { Font } from "./font";
+import { FrameProps } from "./frame";
 import { math } from "./math";
 import { TextButtonProps } from "./textbutton";
 import { TextLabelProps } from "./textlabel";
-import { UDim2 } from "./udim2";
+import { UICornerProps } from "./uicorner";
+import { UDim, UDim2 } from "./udim";
+import { Vector2 } from "./vector";
 
 export default React;
-export { createContext, useCallback, useEffect, useMemo, useState };
-
-export interface Binding<T> {
-  getValue(): T;
-  map<U>(predicate: (value: T) => U): Binding<U>;
-}
-
-export function useBinding<T>(
-  initialValue: T
-): [Binding<T>, (newValue: T) => void] {
-  const [value, setValue] = useState(initialValue);
-  const binding: Binding<T> = useMemo(() => {
-    return {
-      getValue: () => value,
-      map: (predicate) => useBinding(predicate(value))[0],
-    };
-  }, [value]);
-  return [binding, setValue];
-}
+export type { Binding, InstanceEvent, InstanceChangeEvent, Ref };
+export {
+  createContext,
+  forwardRef,
+  useBinding,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+};
 
 export class game {
   static PlaceId: number = 0;
@@ -82,8 +85,13 @@ declare global {
     Volume: number;
   }
 
-  interface RBXScriptSignal {
-    Connect(callback: () => void): void;
+  interface RBXScriptConnection {
+    Connected: boolean;
+    Disconnect(this: RBXScriptConnection): void;
+  }
+
+  interface RBXScriptSignal<T = Callback> {
+    Connect(callback: T): RBXScriptConnection;
     Disconnect(): void;
   }
 
@@ -118,24 +126,19 @@ declare global {
     static fromEnum(font: Enum.Font): Font;
   }
 
+  class Frame extends RobloxInstance<FrameProps> {}
+
+  class UDim {
+    constructor(x: number, o: number);
+  }
+
   class UDim2 {
     constructor(xs: number, xo: number, ys: number, yo: number);
   }
 
-  class TextButton
-    extends React.Component<TextButtonProps>
-    implements Instance
-  {
-    Name: String;
-    Parent?: Instance;
-    Destroy: () => void;
-    FindFirstChild: <X = Instance>(name: string) => X | undefined;
-    GetChildren: <X = Instance>(this: Instance) => Array<X>;
-    WaitForChild: <X = Instance>(
-      this: Instance,
-      childName: string | number
-    ) => X;
-  }
+  class UICorner extends RobloxInstance<UICornerProps> {}
+
+  class TextButton extends RobloxInstance<TextButtonProps> {}
 
   class Vector2 {
     X: number;
@@ -178,8 +181,10 @@ declare global {
 
   namespace JSX {
     interface IntrinsicElements {
+      frame: FrameProps;
       textbutton: TextButtonProps;
       textlabel: TextLabelProps;
+      uicorner: UICornerProps;
     }
   }
 }
@@ -187,7 +192,9 @@ declare global {
 (globalThis as any).Instance = Instance;
 (globalThis as any).Color3 = Color3;
 (globalThis as any).Font = Font;
+(globalThis as any).UDim = UDim;
 (globalThis as any).UDim2 = UDim2;
+(globalThis as any).Vector2 = Vector2;
 (globalThis as any).math = math;
 (globalThis as any).os = os;
 (globalThis as any).task = task;

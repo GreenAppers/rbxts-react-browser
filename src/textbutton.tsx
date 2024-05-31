@@ -1,32 +1,29 @@
-import React from "react";
+import { Binding } from "./binding";
+import { InstanceChangeEvent, InstanceEvent, RobloxInstance } from "./instance";
 
 export interface TextButtonProps {
-  BackgroundColor3?: Color3;
-  BackgroundTransparency?: number;
-  Position?: UDim2;
-  Size?: UDim2;
+  Active?: boolean | Binding<boolean>;
+  AnchorPoint?: Vector2 | Binding<Vector2>;
+  AutoButtonColor?: boolean | Binding<boolean>;
+  BackgroundColor3?: Color3 | Binding<Color3>;
+  BackgroundTransparency?: number | Binding<number>;
+  BorderSizePixel?: number | Binding<number>
+  Change?: InstanceChangeEvent<TextButton>;
+  ClipsDescendants?: boolean | Binding<boolean>;
+  Event?: InstanceEvent<TextButton>;
+  children?: any[];
+  LayoutOrder?: number | Binding<number>
+  Position?: UDim2 | Binding<UDim2>;
+  Size?: UDim2 | Binding<UDim2>;
   Text?: String;
-  TextColor3?: Color3;
+  TextColor3?: Color3 | Binding<Color3>;
   TextScaled?: boolean;
   TextSize?: number;
+  Visible?: boolean | Binding<boolean>;
+  ZIndex?: number | Binding<number>;
 }
 
-export class TextButton
-  extends React.Component<TextButtonProps>
-  implements Instance
-{
-  Name = "";
-  Destroy() {}
-  FindFirstChild(_name: string) {
-    return undefined;
-  }
-  GetChildren() {
-    return [];
-  }
-  WaitForChild<X>(_childName: string | number): X {
-    throw new Error("");
-  }
-
+export class TextButton extends RobloxInstance<TextButtonProps> {
   render() {
     return (
       <span

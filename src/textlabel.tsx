@@ -1,3 +1,5 @@
+import { RobloxInstance } from "./instance";
+
 export interface TextLabelProps {
   BackgroundColor3?: Color3;
   BackgroundTransparency?: number;
@@ -9,15 +11,17 @@ export interface TextLabelProps {
   TextSize?: number;
 }
 
-export const TextLabel = (props: TextLabelProps) => {
-  return (
-    <span
-      style={{
-        backgroundColor: props.BackgroundColor3?.toString(),
-        color: props.TextColor3?.toString(),
-      }}
-    >
-      {props.Text || ""}
-    </span>
-  );
-};
+export class TextLabel extends RobloxInstance<TextLabelProps> {
+  render() {
+    return (
+      <span
+        style={{
+          backgroundColor: this.props.BackgroundColor3?.toString(),
+          color: this.props.TextColor3?.toString(),
+        }}
+      >
+        {this.props.Text || ""}
+      </span>
+    );
+  }
+}
