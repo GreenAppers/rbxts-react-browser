@@ -1,14 +1,15 @@
+import React from "react";
 import { Binding } from "./binding";
-import { InstanceChangeEvent, InstanceEvent, RobloxInstance } from "./instance";
+import { InstanceChangeEvent, InstanceEvent } from "./instance";
 
 export interface TextLabelProps {
   AutomaticSize?: Enum.AutomaticSize | "X" | "Y" | "XY" | "None";
   AnchorPoint?: Vector2 | Binding<Vector2>;
   BackgroundColor3?: Color3 | Binding<Color3>;
   BackgroundTransparency?: number | Binding<number>;
-  Change?: InstanceChangeEvent<TextLabel>;
+  Change?: InstanceChangeEvent<any>;
   ClipsDescendants?: boolean | Binding<boolean>;
-  Event?: InstanceEvent<TextLabel>;
+  Event?: InstanceEvent<any>;
   Font?: Enum.Font | Binding<Enum.Font>;
   FontFace?: Font | Binding<Font>;
   children?: any[];
@@ -31,17 +32,15 @@ export interface TextLabelProps {
   ZIndex?: number | Binding<number>;
 }
 
-export class TextLabel extends RobloxInstance<TextLabelProps> {
-  render() {
-    return (
-      <span
-        style={{
-          backgroundColor: this.props.BackgroundColor3?.toString(),
-          color: this.props.TextColor3?.toString(),
-        }}
-      >
-        {this.props.Text?.toString() || ""}
-      </span>
-    );
-  }
-}
+export function TextLabel(props: TextLabelProps) {
+  return (
+    <span
+      style={{
+        backgroundColor: props.BackgroundColor3?.toString(),
+        color: props.TextColor3?.toString(),
+      }}
+    >
+      {props.Text?.toString() || ""}
+    </span>
+  );
+};

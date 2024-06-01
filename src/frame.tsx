@@ -1,15 +1,16 @@
+import React from "react";
 import { Binding } from "./binding";
-import { InstanceChangeEvent, InstanceEvent, RobloxInstance } from "./instance";
+import { InstanceChangeEvent, InstanceEvent } from "./instance";
 
 export interface FrameProps {
   AnchorPoint?: Vector2 | Binding<Vector2>;
   BackgroundColor3?: Color3 | Binding<Color3>;
   BackgroundTransparency?: number | Binding<number>;
   BorderSizePixel?: number | Binding<number>;
-  Change?: InstanceChangeEvent<Frame>;
+  Change?: InstanceChangeEvent<any>;
   children?: any[];
   ClipsDescendants?: boolean | Binding<boolean>;
-  Event?: InstanceEvent<Frame>;
+  Event?: InstanceEvent<any>;
   LayoutOrder?: number | Binding<number>;
   Position?: UDim2 | Binding<UDim2>;
   ref?: any;
@@ -19,16 +20,14 @@ export interface FrameProps {
   ZIndex?: number | Binding<number>;
 }
 
-export class Frame extends RobloxInstance<FrameProps> {
-  render() {
-    return (
-      <div
-        style={{
-          backgroundColor: this.props.BackgroundColor3?.toString(),
-        }}
-      >
-        {this.props.children}
-      </div>
-    );
-  }
-}
+export function Frame(props: FrameProps) {
+  return (
+    <div
+      style={{
+        backgroundColor: props.BackgroundColor3?.toString(),
+      }}
+    >
+      {props.children}
+    </div>
+  );
+};

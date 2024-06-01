@@ -15,19 +15,22 @@ function jsx(
   props: Record<string, any>,
   key: string | number | undefined
 ) {
-  switch (type.toString().toLocaleLowerCase()) {
-    case "frame":
-      type = Frame;
-      break;
-    case "textbutton":
-      type = TextButton;
-      break;
-    case "textlabel":
-      type = TextLabel;
-      break;
-    case "uicorner":
-      type = UICorner;
-      break;
+  
+  if (!(typeof window !== "undefined")) {
+    switch (type) {
+      case "frame":
+        type = Frame;
+        break;
+      case "textbutton":
+        type = TextButton;
+        break;
+      case "textlabel":
+        type = TextLabel;
+        break;
+      case "uicorner":
+        type = UICorner;
+        break;
+    }
   }
   if (key !== undefined) {
     return createElement(type, {

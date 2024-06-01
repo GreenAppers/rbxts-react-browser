@@ -12,18 +12,13 @@ import React, {
 } from "react";
 import { Binding, createBinding, useBinding, joinBindings } from "./binding";
 import { Color3 } from "./color";
-import {
-  Callback,
-  InstanceEvent,
-  InstanceChangeEvent,
-  RobloxInstance,
-} from "./instance";
+import { Callback, InstanceEvent, InstanceChangeEvent } from "./instance";
 import { Font } from "./font";
-import { FrameProps } from "./frame";
+import { Frame, FrameProps } from "./frame";
 import { math } from "./math";
-import { TextButtonProps } from "./textbutton";
-import { TextLabelProps } from "./textlabel";
-import { UICornerProps } from "./uicorner";
+import { TextButton, TextButtonProps } from "./textbutton";
+import { TextLabel, TextLabelProps } from "./textlabel";
+import { UICorner, UICornerProps } from "./uicorner";
 import { UDim, UDim2 } from "./udim";
 import { Vector2 } from "./vector";
 
@@ -51,6 +46,10 @@ export {
 
 export type InferEnumNames<T> = T;
 
+export function print(...args: any[]): void {
+  console.log(args)
+}
+
 export function $tuple(...args: any[]): any {
   return args;
 }
@@ -74,16 +73,9 @@ export class task {
 }
 
 declare global {
-  interface Instance {
-    Name: String;
-    Parent?: Instance;
-    Destroy: () => void;
-    FindFirstChild: <X = Instance>(name: string) => X | undefined;
-    GetChildren: <X = Instance>(this: Instance) => Array<X>;
-    WaitForChild: <X = Instance>(
-      this: Instance,
-      childName: string | number
-    ) => X;
+  interface Instance extends Record<string, any> {
+    //Parent?: Object
+    //Destroy?: () => void
   }
 
   interface CreatableInstances {
@@ -234,7 +226,8 @@ declare global {
     static fromEnum(font: Enum.Font): Font;
   }
 
-  class Frame extends RobloxInstance<FrameProps> {}
+  type Frame = Instance & ((props: FrameProps) => JSX.Element);
+  function Frame(props: FrameProps): JSX.Element;
 
   type LuaTuple<T> = T;
 
@@ -252,11 +245,13 @@ declare global {
     Lerp(goal: UDim2, alpha: number): UDim2;
   }
 
-  class UICorner extends RobloxInstance<UICornerProps> {}
+  type UICorner = Instance & ((props: UICornerProps) => JSX.Element);
+  type TextButton = Instance & ((props: TextButtonProps) => JSX.Element);
+  type TextLabel = Instance & ((props: TextLabelProps) => JSX.Element);
 
-  class TextButton extends RobloxInstance<TextButtonProps> {}
-
-  class TextLabel extends RobloxInstance<TextLabelProps> {}
+  function UICorner(props: UICornerProps): JSX.Element;
+  function TextButton(props: TextButtonProps): JSX.Element;
+  function TextLabel(props: TextLabelProps): JSX.Element;
 
   class Vector2 {
     X: number;
@@ -293,6 +288,7 @@ declare global {
     static sign(x: number): -1 | 0 | 1;
   }
 
+  function print(...args: any[]): void;  
   function $tuple(...args: any[]): any;
   function typeOf<T>(value: T): string;
 
@@ -318,12 +314,103 @@ declare global {
   }
 }
 
-(globalThis as any).Instance = Instance;
 (globalThis as any).Color3 = Color3;
 (globalThis as any).Font = Font;
 (globalThis as any).UDim = UDim;
 (globalThis as any).UDim2 = UDim2;
 (globalThis as any).Vector2 = Vector2;
+(globalThis as any).game = game;
 (globalThis as any).math = math;
 (globalThis as any).os = os;
 (globalThis as any).task = task;
+(globalThis as any).print = print;
+(globalThis as any).$tuple = $tuple;
+(globalThis as any).typeOf = typeOf;
+
+(globalThis as any).Instance = (type: string) => {
+  switch (type) {
+    case "Color3":
+      return new Color3();
+    default:
+      return {};
+  }
+};
+
+(globalThis as any).Enum = {
+  AutomaticSize: {
+    None: "None",
+    X: "X",
+    Y: "Y",
+    XY: "XY",
+  },
+  EasingDirection: {
+    In: "In",
+    Out: "Out",
+    InOut: "InOut",
+  },
+  EasingStyle: {
+    Linear: "Linear",
+    Sine: "Sine",
+    Back: "Back",
+    Quad: "Quad",
+    Quart: "Quart",
+    Quint: "Quint",
+    Bounce: "Bounce",
+    Elastic: "Elastic",
+    Exponential: "Exponential",
+    Circular: "Circular",
+    Cubic: "Cubic",
+  },
+  Font: {
+    RobotoMono: "RobotoMono",
+    Unknown: "Unknown",
+  },
+  FontWeight: {
+    Thin: 100,
+    ExtraLight: 200,
+    Light: 300,
+    Regular: 400,
+    Medium: 500,
+    SemiBold: 600,
+    Bold: 700,
+    ExtraBold: 800,
+    Heavy: 900,
+  },
+  TextXAlignment: {
+    Center: "Center",
+    Left: "Left",
+    Right: "Right",
+  },
+  TextYAlignment: {
+    Center: "Center",
+    Bottom: "Bottom",
+    Top: "Top",
+  },
+  TextTruncate: {
+    AtEnd: "AtEnd",
+    None: "None",
+    SplitWord: "SplitWord",
+  },
+  UserInputType: {
+    Keyboard: "Keyboard",
+    MouseButton1: "MouseButton1",
+    MouseButton2: "MouseButton2",
+    MouseButton3: "MouseButton3",
+    MouseMovement: "MouseMovement",
+    MouseWheel: "MouseWheel",
+    Touch: "Touch",
+    Accelerometer: "Accelerometer",
+    Gyro: "Gyro",
+    Gamepad1: "Gamepad1",
+    Gamepad2: "Gamepad2",
+    Gamepad3: "Gamepad3",
+    Gamepad4: "Gamepad4",
+    Gamepad5: "Gamepad5",
+    Gamepad6: "Gamepad6",
+    Gamepad7: "Gamepad7",
+    Gamepad8: "Gamepad8",
+    TextInput: "TextInput",
+    InputMethod: "InputMethod",
+    None: "None",
+  },
+};
