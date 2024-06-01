@@ -5,6 +5,7 @@ import React, {
   Ref,
   SetStateAction,
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useState,
@@ -42,12 +43,21 @@ export {
   joinBindings,
   useBinding,
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useState,
 };
 
 export type InferEnumNames<T> = T;
+
+export function $tuple(...args: any[]): any {
+  return args;
+}
+
+export function typeOf<T>(value: T): string {
+  return typeof value;
+}
 
 export class game {
   static PlaceId: number = 0;
@@ -173,6 +183,28 @@ declare global {
       None = "None",
       SplitWord = "SplitWord",
     }
+    enum UserInputType {
+      Keyboard = "Keyboard",
+      MouseButton1 = "MouseButton1",
+      MouseButton2 = "MouseButton2",
+      MouseButton3 = "MouseButton3",
+      MouseMovement = "MouseMovement",
+      MouseWheel = "MouseWheel",
+      Touch = "Touch",
+      Accelerometer = "Accelerometer",
+      Gyro = "Gyro",
+      Gamepad1 = "Gamepad1",
+      Gamepad2 = "Gamepad2",
+      Gamepad3 = "Gamepad3",
+      Gamepad4 = "Gamepad4",
+      Gamepad5 = "Gamepad5",
+      Gamepad6 = "Gamepad6",
+      Gamepad7 = "Gamepad7",
+      Gamepad8 = "Gamepad8",
+      TextInput = "TextInput",
+      InputMethod = "InputMethod",
+      None = "None",
+    }
   }
 
   class CFrame {
@@ -203,6 +235,8 @@ declare global {
   }
 
   class Frame extends RobloxInstance<FrameProps> {}
+
+  type LuaTuple<T> = T;
 
   class UDim {
     Scale: number;
@@ -258,6 +292,9 @@ declare global {
     static round(x: number): number;
     static sign(x: number): -1 | 0 | 1;
   }
+
+  function $tuple(...args: any[]): any;
+  function typeOf<T>(value: T): string;
 
   class game {
     static PlaceId: number;
