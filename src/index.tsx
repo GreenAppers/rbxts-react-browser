@@ -175,6 +175,28 @@ declare global {
     }
   }
 
+  class CFrame {
+    Position: Vector3;
+    LookVector: Vector3;
+    RightVector: Vector3;
+    UpVector: Vector3;
+
+    constructor(
+      x: number,
+      y: number,
+      z: number,
+      R00: number,
+      R01: number,
+      R02: number,
+      R10: number,
+      R11: number,
+      R12: number,
+      R20: number,
+      R21: number,
+      R22: number
+    );
+  }
+
   class Font {
     constructor(name?: string, weight?: Enum.FontWeight);
     static fromEnum(font: Enum.Font): Font;
@@ -206,6 +228,14 @@ declare global {
     X: number;
     Y: number;
     constructor(x: number, y: number);
+    get Magnitude(): number;
+  }
+
+  class Vector3 {
+    X: number;
+    Y: number;
+    Z: number;
+    constructor(x: number, y: number, z: number);
     get Magnitude(): number;
   }
 
